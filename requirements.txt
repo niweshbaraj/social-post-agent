@@ -1,0 +1,10 @@
+streamlit
+langchain
+langgraph
+langsmith
+huggingface_hub
+requests
+transformers
+pydantic
+python-dotenv
+Pillow
