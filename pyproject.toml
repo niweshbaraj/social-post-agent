@@ -4,4 +4,20 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "huggingface-hub>=0.34.1",
+    "ipykernel>=6.30.0",
+    "langchain>=0.3.27",
+    "langchain-together>=0.3.0",
+    "langgraph>=0.5.4",
+    "langsmith>=0.4.8",
+    "pillow>=11.3.0",
+    "praw>=7.8.1",
+    "pydantic>=2.11.7",
+    "python-dotenv>=1.1.1",
+    "requests>=2.32.4",
+    "streamlit>=1.47.1",
+    "together>=1.5.21",
+    "transformers>=4.54.0",
+    "tweepy>=4.16.0",
+]

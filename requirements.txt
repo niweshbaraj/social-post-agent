@@ -8,3 +8,6 @@ transformers
 pydantic
 python-dotenv
 Pillow
+together
+langchain-together
+tweepy
