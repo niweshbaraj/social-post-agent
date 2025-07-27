@@ -1,6 +1,6 @@
 from langchain_together import ChatTogether
 from together import Together
-from agent.agent_state import GeneratePost, EvaluatePost
+from agent.states.agent_state import GeneratePost, EvaluatePost
 from dotenv import load_dotenv
 
 load_dotenv()

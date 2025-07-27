@@ -1,7 +1,7 @@
 import os
 import tweepy
 from dotenv import load_dotenv
-from agent.agent_state import PostState
+from agent.states.agent_state import PostState
 
 
 def text_post_on_x_twitter(state: PostState) -> dict:

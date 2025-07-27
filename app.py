@@ -57,14 +57,48 @@ async def post_content(
             "max_iteration": output.get("max_iteration"),
             "status": output.get("status"),
             "feedback": output.get("feedback"),
-            "post_history": output.get("post_history", []),
-            "feedback_history": output.get("feedback_history", []),
+            "platform": output.get("platform"),
+            "error_details": output.get("response") if output.get("status_code") != 201 else None,
         }
         
         if output.get("status_code") == 201:
             return JSONResponse(status_code=201, content={"message": "Post created successfully", "data": clean_output})
+        elif output.get("status_code") is None:
+            # Handle API credential/permission errors
+            error_message = output.get("response", "Unknown error")
+            if "403 Forbidden" in str(error_message) or "not permitted" in str(error_message):
+                return JSONResponse(
+                    status_code=403, 
+                    content={
+                        "message": "API Permission Error", 
+                        "error": "Your API credentials don't have permission to post. Please check your Twitter API access level.",
+                        "data": clean_output,
+                        "suggestions": [
+                            "Verify your Twitter API credentials in .env file",
+                            "Check if your Twitter API account has 'Read and Write' permissions",
+                            "Ensure you have Twitter API v2 access with posting permissions",
+                            "For testing, you can still see the generated content in the response"
+                        ]
+                    }
+                )
+            else:
+                return JSONResponse(
+                    status_code=500, 
+                    content={
+                        "message": "API Connection Error", 
+                        "error": str(error_message),
+                        "data": clean_output
+                    }
+                )
         else:
-            return JSONResponse(status_code=400, content={"message": "Post creation failed", "error": output.get("error", "Unknown error")})
+            return JSONResponse(
+                status_code=400, 
+                content={
+                    "message": "Post creation failed", 
+                    "error": output.get("response", "Unknown error"),
+                    "data": clean_output
+                }
+            )
     except Exception as e:
         print(f"Error processing workflow output: {e}")
         print(f"Output keys: {list(output.keys()) if isinstance(output, dict) else 'Not a dict'}")

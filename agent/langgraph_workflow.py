@@ -1,5 +1,5 @@
 from langgraph.graph import StateGraph, END, START
-from agent.agent_state import PostState
+from agent.states.agent_state import PostState
 from agent.post_generator import generate_post
 from agent.post_evaluator import evaluate_post
 from agent.post_optimizer import optimize_post
@@ -16,6 +16,18 @@ def decision_one(state:PostState) -> str:
 
 
 def decision_two(state: PostState) -> str:
+    platform = state.get('platform', 'twitter')
+    
+    # Instagram always requires an image
+    if platform == 'instagram':
+        if state.get('image_path') is not None:
+            print("Instagram: image_path found, media_post")
+            return "media_post"
+        else:
+            print("Instagram: no image found, generate_ai_image")
+            return "generate_ai_image"
+    
+    # For Twitter and LinkedIn, follow original logic
     if state.get('image_path') is not None:
         print("image_path found, media_post")
         return "media_post"

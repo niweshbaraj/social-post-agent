@@ -1,5 +1,7 @@
-from agent.agent_state import PostState
+from agent.states.agent_state import PostState
 from agent.social_media.x_twitter_poster import text_post_on_x_twitter, media_post_on_x_twitter
+from agent.social_media.linkedin_poster import text_post_on_linkedin, media_post_on_linkedin
+from agent.social_media.instagram_poster import text_post_on_instagram, media_post_on_instagram
 
 
 def text_post(state: PostState) -> PostState:
@@ -10,12 +12,10 @@ def text_post(state: PostState) -> PostState:
         response = text_post_on_x_twitter(state)
     elif platform == 'linkedin':
         print("Posting text on LinkedIn")
-        # TODO: Implement LinkedIn posting
-        response = {"status_code": 400, "response": "LinkedIn posting not yet implemented"}
+        response = text_post_on_linkedin(state)
     elif platform == 'instagram':
         print("Posting text on Instagram")
-        # TODO: Implement Instagram posting
-        response = {"status_code": 400, "response": "Instagram posting not yet implemented"}
+        response = text_post_on_instagram(state)
     else:
         print(f"Unknown platform: {platform}")
         response = {"status_code": 400, "response": f"Unsupported platform: {platform}"}
@@ -33,12 +33,10 @@ def media_post(state: PostState) -> PostState:
         response = media_post_on_x_twitter(state)
     elif platform == 'linkedin':
         print("Posting media on LinkedIn")
-        # TODO: Implement LinkedIn media posting
-        response = {"status_code": 400, "response": "LinkedIn media posting not yet implemented"}
+        response = media_post_on_linkedin(state)
     elif platform == 'instagram':
         print("Posting media on Instagram")
-        # TODO: Implement Instagram media posting
-        response = {"status_code": 400, "response": "Instagram media posting not yet implemented"}
+        response = media_post_on_instagram(state)
     else:
         print(f"Unknown platform: {platform}")
         response = {"status_code": 400, "response": f"Unsupported platform: {platform}"}

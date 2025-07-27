@@ -60,9 +60,26 @@ async function postToSocialMedia(platform) {
         statusDiv.innerHTML = `❌ Failed to post to ${platform}: ${result.message || 'Unknown error'}`;
         statusDiv.style.color = "#e74c3c";
       }
+    } else if (response.status === 403) {
+      // Handle API permission errors specifically
+      contentPre.textContent = result.data?.post || '[Content generated but not posted]';
+      statusDiv.innerHTML = `⚠️ Content generated but not posted: ${result.error}`;
+      statusDiv.style.color = "#f39c12";
+      
+      // Show suggestions if available
+      if (result.suggestions) {
+        statusDiv.innerHTML += '<br><small>Suggestions:<br>' + result.suggestions.join('<br>') + '</small>';
+      }
     } else {
-      statusDiv.innerHTML = `❌ Error: ${result.message || 'Failed to generate post'}`;
-      statusDiv.style.color = "#e74c3c";
+      // Show generated content even if posting failed
+      if (result.data?.post) {
+        contentPre.textContent = result.data.post;
+        statusDiv.innerHTML = `⚠️ Content generated but posting failed: ${result.message || result.error}`;
+        statusDiv.style.color = "#f39c12";
+      } else {
+        statusDiv.innerHTML = `❌ Error: ${result.message || 'Failed to generate post'}`;
+        statusDiv.style.color = "#e74c3c";
+      }
     }
   } catch (err) {
     statusDiv.textContent = "❌ Error: " + (err.message || err.toString());

@@ -1,6 +1,6 @@
 import requests
 from together import Together
-from agent.agent_state import PostState
+from agent.states.agent_state import PostState
 from models.models import image_model
 
 
