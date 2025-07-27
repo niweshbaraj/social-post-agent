@@ -1,3 +1,4 @@
+fastapi
 streamlit
 langchain
 langgraph
@@ -11,3 +12,4 @@ Pillow
 together
 langchain-together
 tweepy
+uvicorn
