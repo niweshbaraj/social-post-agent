@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Social Post Agent</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h2 class="title">Social Post Agent</h2>
+    <div class="field">
+      <label for="topic">Post Topic</label>
+      <input id="topic" name="topic" type="text" placeholder="What's your post about?" required>
+    </div>
+    <div class="field smallest">
+      <label for="max-iteration">Post Quality Iterations</label>
+      <input id="max-iteration" name="max-iteration" type="number" min="1" max="10" value="3">
+    </div>
+    <div class="field checkbox">
+      <input id="generate-image" name="generate-image" type="checkbox">
+      <label for="generate-image">Generate AI image</label>
+    </div>
+    <div class="buttons-row">
+      <button id="twitter-btn" class="social-btn twitter">
+        <img src="logo/x_twitter-logo.svg" alt="Twitter" />
+      </button>
+      <button id="linkedin-btn" class="social-btn linkedin">
+        <img src="logo/linkedin-logo.svg" alt="LinkedIn" />
+      </button>
+      <button id="instagram-btn" class="social-btn instagram">
+        <img src="logo/instagram-logo.svg" alt="Instagram" />
+      </button>
+    </div>
+    <div id="status"></div>
+    <div class="post-preview">
+      <h3>Generated Post</h3>
+      <pre id="content"></pre>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

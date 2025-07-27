@@ -16,6 +16,7 @@ class PostState(TypedDict):
     uploadassets: str
     image_path: str
     generate_image: Literal[True, False]
+    platform: Literal["twitter", "linkedin", "instagram"]
     next: str
     path_choose: str
     url: str

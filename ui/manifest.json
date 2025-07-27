@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Social Post Agent",
+  "version": "1.0",
+  "description": "Generates and schedules social media posts.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "storage",
+    "http://localhost/*",
+    "https://localhost/*",
+    "https://www.googleapis.com/*"
+  ]
+}

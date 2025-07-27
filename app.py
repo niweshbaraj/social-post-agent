@@ -1,11 +1,21 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from agent.langgraph_workflow import workflow
 
 
 app = FastAPI()
+
+# Add CORS middleware to handle browser extension requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with specific origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get('/')
 def home():
@@ -16,6 +26,7 @@ class InitialState(BaseModel):
     topic: str = Field(..., description="The topic for the post")
     max_iteration: int = Field(5, description="Maximum number of iterations for post optimization")
     generate_image: bool = Field(False, description="Whether to generate an image for the post")
+    platform: str = Field("twitter", description="Social media platform to post to (X [twitter], linkedin, instagram)")
 
 
 @app.post("/post_content/")
@@ -27,6 +38,7 @@ async def post_content(
         "iteration": 1,
         "max_iteration": data.max_iteration,
         "generate_image": data.generate_image,
+        "platform": data.platform,
     }
     
     output = workflow.invoke(initial_state)
