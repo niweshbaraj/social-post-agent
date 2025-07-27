@@ -278,6 +278,25 @@ uvicorn app:app --reload
    - Connect Instagram Business account
    - Get Business Account ID and Access Token
 
+### 🤖 Together & ChatTogether: Free LLM Backend
+
+This project uses [Together AI](https://www.together.ai/) to access free/open-source language models like LLaMA, Mistral, and Zephyr.
+
+We use the `ChatTogether` wrapper from LangChain to connect to these models inside LangGraph flows.
+
+#### Why Together?
+- 💸 Free & open source models
+- 🧩 Easy integration with LangChain
+- 🚀 No GPU or hosting setup needed
+- 🔌 Plug-and-play model switching
+
+To use it:
+1. Get a free API key from [Together](https://www.together.ai/)
+2. Add it to your `.env` or environment:
+   ```bash
+   export TOGETHER_API_KEY=your_key_here
+   ```
+
 ## 🖥️ Usage
 
 ### Using the Chrome Extension
