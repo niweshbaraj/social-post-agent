@@ -37,6 +37,7 @@ An intelligent AI-powered social media content generator that creates, evaluates
 - **FastAPI** - Modern Python web framework
 - **LangGraph** - Workflow orchestration for AI agents
 - **LangChain** - LLM integration and prompt management
+- **LangSmith** - Observability and monitoring for AI workflows
 - **Tweepy** - Twitter API integration
 - **Together** - Access language models
 - **Pydantic** - Data validation and serialization
@@ -99,8 +100,11 @@ social-post-agent/
 │   ├── pyproject.toml            # Project metadata
 │   ├── requirements.txt          # Python dependencies
 │   └── uv.lock                   # Locked dependencies
-├── 🚀 app.py                      # FastAPI server
-└── 📚 README.md
+├── � Documentation
+│   ├── LANGSMITH_GUIDE.md        # LangSmith integration guide
+│   ├── LICENSE                   # MIT License
+│   └── README.md                 # Main documentation
+├── � app.py                      # FastAPI server
 ```
 
 ## 🚀 Quick Start
@@ -128,7 +132,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 **Setup Project:**
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/social-post-agent.git
+git clone https://github.com/niweshbaraj/social-post-agent.git
 cd social-post-agent
 
 # Initialize UV and create virtual environment
@@ -152,7 +156,7 @@ uv add ipykernel
 
 ```bash
 # Clone and navigate
-git clone https://github.com/yourusername/social-post-agent.git
+git clone https://github.com/niweshbaraj/social-post-agent.git
 cd social-post-agent
 
 # Create virtual environment
@@ -179,6 +183,11 @@ cp .env.example .env
 Edit `.env` with your API credentials:
 
 ```env
+# LangSmith API (Optional - for observability and monitoring)
+LANGCHAIN_API_KEY=your_langchain_api_key_here
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_PROJECT=social-post-agent
+
 # OpenAI API (Required for content generation)
 OPENAI_API_KEY=your_openai_api_key
 
@@ -297,6 +306,36 @@ To use it:
    export TOGETHER_API_KEY=your_key_here
    ```
 
+### 📊 LangSmith: AI Workflow Observability
+
+This project integrates [LangSmith](https://smith.langchain.com/) for comprehensive observability and monitoring of your AI workflows.
+
+#### 🔍 What LangSmith Provides
+- **🐛 Debug**: Detailed traces of every workflow step
+- **📈 Monitor**: Performance metrics and usage analytics  
+- **🎯 Evaluate**: Content quality and success rates
+- **⚡ Optimize**: Identify bottlenecks and improve efficiency
+
+#### Setup LangSmith (Optional but Recommended)
+
+1. **Get LangSmith API Key**
+   - Visit [LangSmith](https://smith.langchain.com/)
+   - Create account and generate API key
+
+2. **Add to Environment**
+   ```bash
+   LANGCHAIN_API_KEY=your_langchain_api_key
+   LANGCHAIN_TRACING_V2=true
+   LANGCHAIN_PROJECT=social-post-agent
+   ```
+
+3. **View Traces**
+   - Run your agent and see real-time traces
+   - Monitor content generation, evaluation, and posting
+   - Debug failures and optimize performance
+
+For detailed setup instructions, see [LANGSMITH_GUIDE.md](LANGSMITH_GUIDE.md).
+
 ## 🖥️ Usage
 
 ### Using the Chrome Extension
@@ -408,6 +447,7 @@ To add a new social media platform:
 - Verify API credentials in `.env`
 - Check Twitter app has "Read and Write" permissions
 - Ensure access tokens were regenerated after permission changes
+- Ensure word length is under 100 words (forbides posting lengthy content for free tier)
 
 **Content Generated but Not Posted**
 - Check API credentials are valid
@@ -423,6 +463,17 @@ To add a new social media platform:
 - Ensure FastAPI server is running on `http://localhost:8000`
 - Check CORS settings in `app.py`
 - Verify firewall isn't blocking local connections
+
+**LangSmith Traces Not Appearing**
+- Check `LANGCHAIN_API_KEY` is set correctly in `.env`
+- Ensure `LANGCHAIN_TRACING_V2=true`
+- Verify project name in `LANGCHAIN_PROJECT`
+- Check network connectivity to LangSmith servers
+- See [LANGSMITH_GUIDE.md](LANGSMITH_GUIDE.md) for detailed troubleshooting
+
+- LangSmith tracing 
+
+![alt text](image-4.png)
 
 
 ## 📄 License

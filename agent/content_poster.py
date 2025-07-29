@@ -2,9 +2,12 @@ from agent.states.agent_state import PostState
 from agent.social_media.x_twitter_poster import text_post_on_x_twitter, media_post_on_x_twitter
 from agent.social_media.linkedin_poster import text_post_on_linkedin, media_post_on_linkedin
 from agent.social_media.instagram_poster import text_post_on_instagram, media_post_on_instagram
+from langsmith import traceable
 
 
+@traceable(name="text_post", run_type="tool")
 def text_post(state: PostState) -> PostState:
+    """Post text content to the specified social media platform"""
     platform = state.get('platform', 'twitter')
     
     if platform == 'twitter':
@@ -25,7 +28,9 @@ def text_post(state: PostState) -> PostState:
     return state
 
 
+@traceable(name="media_post", run_type="tool")
 def media_post(state: PostState) -> PostState:
+    """Post media content (text + image) to the specified social media platform"""
     platform = state.get('platform', 'twitter')
     
     if platform == 'twitter':

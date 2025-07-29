@@ -2,6 +2,15 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Configure LangSmith
+from agent.langsmith_config import langsmith_config
+langsmith_config.log_status()
 
 from agent.langgraph_workflow import workflow
 
@@ -33,6 +42,13 @@ class InitialState(BaseModel):
 async def post_content(
     data: InitialState,
 ) -> dict:
+    from langsmith import traceable
+    
+    @traceable(name="social_post_workflow", run_type="chain")
+    def run_workflow(initial_state):
+        """Run the social post generation workflow with LangSmith tracing"""
+        return workflow.invoke(initial_state)
+    
     initial_state = {
         "topic": data.topic,
         "iteration": 1,
@@ -41,11 +57,15 @@ async def post_content(
         "platform": data.platform,
     }
     
-    output = workflow.invoke(initial_state)
-    
-    print(f"Workflow output: {output}")
-    
     try:
+        # Run workflow with tracing if LangSmith is configured
+        if langsmith_config.is_enabled:
+            output = run_workflow(initial_state)
+        else:
+            output = workflow.invoke(initial_state)
+        
+        print(f"Workflow output: {output}")
+        
         # Clean the output to remove problematic fields that might cause serialization issues
         clean_output = {
             "topic": output.get("topic"),
